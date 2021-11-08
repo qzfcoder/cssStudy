@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .concentric_round{
+    width: 100px;
+    height: 100px;
+    position: relative;
+  }
+  .concentric_round::after,
+  .concentric_round::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: black;
+    opacity: 0.4;
+    border-radius: 100%;
+  }
+  .concentric_round::after {
+    width: 50%;
+    height: 50%;
+    animation: after_round .6s ease-in-out infinite alternate;
+  }
+  .concentric_round::before {
+    width: 50%;
+    height: 50%;
+    animation: before_round .6s ease-in-out infinite alternate;
+  }
+  @keyframes after_round{
+    0%{
+      transform: translate3d(-50%,-50%,0) scale(1.3);
+    }
+    100%{
+      transform: translate3d(-50%,-50%,0) scale(1);
+    }
+  }
+  @keyframes before_round{
+    0%{
+      transform: translate3d(-50%,-50%,0) scale(0.7);
+    }
+    100%{
+      transform: translate3d(-50%,-50%,0) scale(1);
+    }
+  }
+</style>
+<body>
+  <section class="concentric_round"></section>
+</body>
+</html>
