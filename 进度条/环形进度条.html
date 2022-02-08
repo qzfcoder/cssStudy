@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- width，height: 分别表示svg元素的宽高
+      viewBox: 控制位移和可容纳的大小 -->
+    <!-- cx、cy：圆心的位置
+          r：表示半径
+          fill: circle 圆的填充色
+          stroke-width：边框宽度
+          stroke：边框的填充色 -->
+    <svg width="200" height="200" viewBox="0 0 200 200">
+      <circle
+        cx="100"
+        cy="100"
+        r="50"
+        fill="none"
+        stroke-width="10"
+        stroke="gray"
+      />
+      <!-- 进度条 -->
+      <!-- stroke-linecap="round"，圆角效果
+            stroke-dasharray：进度条控制。"157 157" 实现达到展示 50% 的效果。 -->
+      <circle
+        id="circle"
+        stroke-linecap="round"
+        cx="100"
+        cy="100"
+        r="50"
+        fill="none"
+        stroke-width="10"
+        stroke="pink"
+        stroke-dasharray="157 157"
+        transform="rotate(-90, 100, 100)"
+      />
+      <text
+        x="100"
+        y="100"
+        fill="#6b778c"
+        text-anchor="middle"
+        dominant-baseline="central"
+      >
+        <tspan id="percent">0</tspan>
+        %
+      </text>
+    </svg>
+    <button onclick="minus()">minus</button>
+  </body>
+  <script>
+    let circle = document.getElementById("circle");
+    let percent = document.getElementById("percent");
+
+    let radius = 50;
+    let v = 0;
+
+    function minus() {
+      // v = v - 0.01;
+      // if (v <= 0) {
+      //   v = 0;
+      // }
+      if (v <= 1) {
+        setInterval(() => {
+          v = v + 0.01;
+          set(v);
+        }, 1000);
+      } else {
+        v = 1;
+      }
+    }
+
+    function set(p) {
+      let total = Math.PI * 2 * radius;
+      percent.innerHTML = Math.round(p * 100);
+      let str = `${p * total} ${total * (1 - p)}`;
+      console.log("stroke-dasharray:", str);
+      circle.style["stroke-dasharray"] = str;
+    }
+
+    setTimeout(() => {
+      set(v);
+    }, 1000);
+  </script>
+</html>
