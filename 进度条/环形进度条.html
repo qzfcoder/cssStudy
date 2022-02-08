@@ -50,6 +50,7 @@
       </text>
     </svg>
     <button onclick="minus()">minus</button>
+    <span id="final"></span>
   </body>
   <script>
     let circle = document.getElementById("circle");
@@ -89,5 +90,27 @@
     setTimeout(() => {
       set(v);
     }, 1000);
+
+    // 数值跳动
+    let final = document.getElementById("final");
+    let result = 12345;
+    (function numberGrow(time, final, el) {
+      //【这里调速度 1 ，步进值， 通俗地讲，就是每次跳的时候，增加的一个增量】
+      let step = parseInt((final * 100) / (time * 1000));
+      let current = 0;
+      let start = 0;
+      let t = setInterval(() => {
+        start += step;
+        if (start > final) {
+          clearInterval(t);
+          start = final;
+          t = null;
+        }
+        current = start;
+        el.innerHTML = current
+          .toString()
+          .replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, "$1,");
+      }, time * 100);
+    })(2, result, final);
   </script>
 </html>
