@@ -57,27 +57,32 @@
 
     let radius = 50;
     let v = 0;
-
+    let timer;
     function minus() {
       // v = v - 0.01;
       // if (v <= 0) {
       //   v = 0;
       // }
-      if (v <= 1) {
-        setInterval(() => {
+      if (v <= 0.1) {
+        timer = setInterval(() => {
           v = v + 0.01;
           set(v);
-        }, 1000);
+        }, 100);
       } else {
+        clearInterval(timer);
         v = 1;
       }
     }
 
     function set(p) {
+      if (p >= 1) {
+        clearInterval(timer);
+        p = 1;
+      }
       let total = Math.PI * 2 * radius;
       percent.innerHTML = Math.round(p * 100);
       let str = `${p * total} ${total * (1 - p)}`;
-      console.log("stroke-dasharray:", str);
+      // console.log("stroke-dasharray:", str);
       circle.style["stroke-dasharray"] = str;
     }
 
